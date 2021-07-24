@@ -34,6 +34,7 @@ var tooltip = d3.select("#my_dataviz")
 d3.select("#circleBasicTooltip")
   .on("mouseover", function(){return tooltip.style("visibility", "visible");})
   .on("mousemove", function(){return tooltip.style("top", (50)+"px").style("left",(50)+"px");})
-  .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+  .on("mouseout", function(){return tooltip.style("visibility", "hidden");})
+  .on("mousemove", function(){return tooltip.text(event.pageY+"px "+event.pageX+"px ");});
 
 </script>
