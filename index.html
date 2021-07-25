@@ -46,32 +46,65 @@
 Data is downloaded from https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=csv
 <script>
 var svg_width = 800, svg_height = 800, slide_idx = 1;
-var margin = {top: 20, right: 25, bottom: 30, left: 40},
+var margin = {topp: 100, right: 100, bottom: 100, left: 100},
   width = svg_width - margin.left - margin.right,
-  height = svg_height - margin.top - margin.bottom;
+  height = svg_height - margin.topp - margin.bottom;
 var author_svg = d3.select('#author_svg')
 // Read the data
 //document.getElementById("test_p").innerHTML="document_set"
 
-d3.csv("https://github.com/xueliangsun/data_visualization/blob/master/GDP.csv")
+var years = d3.range(1960, 2021, 1)
+
+d3.csv("https://raw.githubusercontent.com/xueliangsun/data_visualization/master/GDP.csv")
   .get(function(data){
-  
-
-  document.write(data)
-
+    var country_names = d3.map(data, d => d["Country Name"]).keys();
+    var world_gdp = data.filter(function(d){return d["Country Name"] == "World"})[0]
+    setSlide1(author_svg, data)
   })
+
 function resetAuthorSvg(svg){
   svg.html = ""
   svg.attr("width", svg_width)
      .attr("height", svg_height)
-     .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+     .append("g").attr("transform", "translate(" + margin.left + "," + margin.topp + ")");
 }
-function setSlide1(data){
-  resetAuthorSvg(author_svg)
-  
+function setSlide1(svg, data){
+  resetAuthorSvg(svg)
+  var world_gdp = data.filter(function(d){return d["Country Name"] == "World"})[0]
+  world_gdp = years.map(function(d){return parseFloat(world_gdp[""+d])})
+  document.getElementById("test_p").innerHTML=d3.max(world_gdp)
+  // Build X scales and axis:
+  var x = d3.scaleBand()
+    .range([ 0, width])
+    .domain(years) 
+  svg.append("g")
+    .style("font-size", 15)
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x).tickSize(10))
+
+  document.getElementById("test_p").innerHTML=x(1991)
+  // Build Y scales and axis:
+  var y = d3.scaleLinear()
+    .range([ height, 0 ])
+    .domain([d3.min(world_gdp), d3.max(world_gdp)])
+  svg.append("g")
+    .style("font-size", 15)
+    .attr("transform", "translate(" +  "200," + "200)")
+    .call(d3.axisLeft(y).tickSize(10))
+
+
+  // add the squares
+  svg.selectAll()
+    .data(world_gdp)
+    .enter()
+    .append("rect")
+      .attr("x", function(d, i) { return x(years[i]) })
+      .attr("y", function(d) { return y(d) })
+      .attr("width", 10 )
+      .attr("height", 10 )
+
 }
 document.write("marker1")
-
 </script>
 
 <script>
