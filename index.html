@@ -15,9 +15,10 @@
 .slide_button_cls {
   background-color: #04AA6D; /* #04AA6D Green */
   padding: 0;
-  border-radius: 100%;
-  height:15px;
-  width:15px;
+  border-radius: 50%;
+  font-size: 5px;
+  height:20px;
+  width:20px;
 }
 </style>
 
@@ -26,18 +27,53 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <!-- Create a div where a list of buttons are placed to control the slides -->
-
-
 <div id="slide_button_div">
   <button type="button" class="button_cls slide_button_cls" id="slide_button1">1</button>
   <button type="button" class="button_cls slide_button_cls" id="slide_button2">2</button>
   <button type="button" class="button_cls slide_button_cls" id="slide_button3">3</button>
   <button type="button" class="button_cls slide_button_cls" id="slide_button4">4</button>
 </div>
-<!-- Create a div where the graph will take place -->
-<div id="div_template"></div>
 
+<!-- This interactive page is in martini structure, where the first 4 slides present author-driven content, -->
+<!-- and these slides are switched by buttons. These slides are shown in a svg element called 'author_svg' -->
+<!-- Then there exists an extra svg element to display reader-driven content, called 'reader_svg' -->
+<!-- Create a div where the graph will take place -->
+<svg id="author_svg">
+
+
+</svg>
+<p id="test_p"> AAAA </p>
 Data is downloaded from https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=csv
+<script>
+var svg_width = 800, svg_height = 800, slide_idx = 1;
+var margin = {top: 20, right: 25, bottom: 30, left: 40},
+  width = svg_width - margin.left - margin.right,
+  height = svg_height - margin.top - margin.bottom;
+var author_svg = d3.select('#author_svg')
+// Read the data
+//document.getElementById("test_p").innerHTML="document_set"
+
+d3.csv("https://github.com/xueliangsun/data_visualization/blob/master/GDP.csv")
+  .get(function(data){
+  
+
+  document.write(data)
+
+  })
+function resetAuthorSvg(svg){
+  svg.html = ""
+  svg.attr("width", svg_width)
+     .attr("height", svg_height)
+     .append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+}
+function setSlide1(data){
+  resetAuthorSvg(author_svg)
+  
+}
+document.write("marker1")
+
+</script>
+
 <script>
 
 // set the dimensions and margins of the graph
