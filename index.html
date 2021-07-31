@@ -56,6 +56,7 @@ select{
 <!-- and these slides are switched by buttons. These slides are shown in a svg element called 'author_svg' -->
 <!-- Then there exists an extra svg element to display reader-driven content, called 'reader_svg' -->
 <!-- Create a div where the graph will take place -->
+<p>If you are in China, then you will miss some content of this page. Please use proxy to fully access github.</p>
 <p id="abstract" class="abs_p"></p>
 <div id="author_div">
   <select id='select_box' onchange="setSlide(4)"></select>
@@ -112,8 +113,9 @@ function setSlideSwitch(i){
 
 function setSlide(i){
   if(data_backup == -1){
-    d3.csv("https://gist.githubusercontent.com/xueliangsun/280244fcdb970c77e590c8b2e847752e/raw/18178f889fd4d9c89c6304434eaa3f6b970cb6a5/GDP.csv")
-    //d3.csv("https://raw.githubusercontent.com/xueliangsun/data_visualization/master/GDP.csv")
+    //d3.csv("https://c442.pcloud.com/dHZdYBMVeZD8BL5CZxaX87ZZN1uMv7Z2ZZqdJZkZnewxXZ6tST2fo4yrbOGvjHowTCLkxtNj5X/GDP.csv")
+    //d3.csv("https://gist.githubusercontent.com/xueliangsun/280244fcdb970c77e590c8b2e847752e/raw/18178f889fd4d9c89c6304434eaa3f6b970cb6a5/GDP.csv")
+    d3.csv("https://raw.githubusercontent.com/xueliangsun/data_visualization/master/GDP.csv")
       .get(function(data){
 	data_backup = data
         var country_names = d3.map(data, d => d["Country Name"]).keys();
