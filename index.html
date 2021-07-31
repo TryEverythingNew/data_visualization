@@ -62,7 +62,6 @@ select{
   <svg id="author_svg">
   </svg>
 </div>
-<p id="test_p"> AAAA </p>
 <p>1. Data is downloaded from https://api.worldbank.org/v2/en/indicator/NY.GDP.MKTP.CD?downloadformat=csv</p>
 <p>2. The figure sets gdp to 0 when it's missing in some years.</p>
 <script>
@@ -132,7 +131,6 @@ function resetAuthorSvg(svg){
 }
 
 function getGDP(data, country){
-  console.log(country)
   var gdp_data = data.filter(function(d){return d["Country Name"] == country})[0]
   gdp_data = years.map(function(d){return parseFloat(gdp_data[""+d])})
   return gdp_data.map(function(d){return Number.isNaN(d)?0:d}) // convert nan gdp to 0
@@ -195,7 +193,6 @@ function setSlideTemplate(svg, data, country, abstract_content, title){
 
   var x = getXaxis(svg)
   var y = getYaxis(svg, gdp_data)
-  document.getElementById("test_p").innerHTML="Marker2"
 
   var tooltip_text = svg.append("text")
   var mouseover = function(d, i) {
@@ -229,7 +226,6 @@ function setSlideTemplate(svg, data, country, abstract_content, title){
   addTitle(svg, title)
 }
 setSlide(1)
-document.write("marker1")
 </script>
 
 
